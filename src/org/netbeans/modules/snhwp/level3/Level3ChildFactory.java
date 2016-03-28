@@ -10,7 +10,12 @@ public class Level3ChildFactory extends ChildFactory<String> {
 
     @Override
     protected boolean createKeys(List<String> list) {
-        list.add("three");
+        try {
+            Thread.sleep(10000);
+            list.add("three");
+        } catch (InterruptedException ex) {
+            Exceptions.printStackTrace(ex);
+        }
         return true;
     }
 

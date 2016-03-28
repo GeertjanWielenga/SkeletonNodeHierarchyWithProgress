@@ -2,6 +2,8 @@ package org.netbeans.modules.snhwp.level2;
 
 import java.beans.IntrospectionException;
 import java.util.List;
+import org.netbeans.api.progress.ProgressHandle;
+import org.netbeans.api.progress.ProgressHandleFactory;
 import org.openide.nodes.ChildFactory;
 import org.openide.nodes.Node;
 import org.openide.util.Exceptions;
@@ -10,7 +12,16 @@ public class Level2ChildFactory extends ChildFactory<String> {
 
     @Override
     protected boolean createKeys(List<String> list) {
-        list.add("two");
+        String msg = "Processing Level 2...";
+        ProgressHandle handle = ProgressHandleFactory.createSystemHandle(msg);
+        handle.start();
+        try {
+            Thread.sleep(10000);
+            list.add("two");
+        } catch (InterruptedException ex) {
+            Exceptions.printStackTrace(ex);
+        }
+        handle.finish();
         return true;
     }
 
@@ -24,5 +35,5 @@ public class Level2ChildFactory extends ChildFactory<String> {
         }
         return node;
     }
-    
+
 }
